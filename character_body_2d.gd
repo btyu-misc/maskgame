@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -600.0
-var gravity_scale:float = 3000./1920.
+const SPEED:int = 80
+const JUMP_VELOCITY = -120.0
+var gravity_scale:float = 500./1920.
 var gravity:Vector2
 
 func _ready():
@@ -26,8 +26,8 @@ func _physics_process(delta: float) -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = (int)(direction * SPEED)
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward((int)(velocity.x), 0, SPEED)
 
 	move_and_slide()

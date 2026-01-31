@@ -5,11 +5,20 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ij6vw"]
 size = Vector2(357, 721)
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1802959487]
+[node name="Berdly" type="CharacterBody2D" unique_id=1802959487]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=919871512]
+scale = Vector2(0.03, 0.03)
 texture = ExtResource("1_f50pn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1249938154]
-position = Vector2(-2.5, 1.5)
+position = Vector2(-1.4210855e-14, 1.4210855e-14)
+scale = Vector2(0.03, 0.03)
 shape = SubResource("RectangleShape2D_ij6vw")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=213581809]
+offset = Vector2(40, 0)
+process_callback = 0
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 15.0
