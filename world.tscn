@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://1jbhp08olbkg" path="res://character_body_2d.tscn" id="2_tlwt5"]
 [ext_resource type="Script" uid="uid://br5tsr10vjxgi" path="res://character_body_2d.gd" id="3_aqk2v"]
 
-[node name="World" type="Node2D" unique_id=1526047387]
-position = Vector2(337, 308)
+[node name="Level1" type="Node2D" unique_id=1526047387]
+position = Vector2(287, 143)
 script = ExtResource("1_aqk2v")
 
 [node name="platform" parent="." unique_id=1667965564 instance=ExtResource("1_f3sb7")]
