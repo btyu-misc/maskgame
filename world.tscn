@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dwkkl5sr4y7da"]
+
+[ext_resource type="Script" uid="uid://e2cvddxqccoj" path="res://world.gd" id="1_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://citt2omjx3kci" path="res://platform.tscn" id="1_f3sb7"]
+[ext_resource type="PackedScene" uid="uid://1jbhp08olbkg" path="res://character_body_2d.tscn" id="2_tlwt5"]
+[ext_resource type="Script" uid="uid://br5tsr10vjxgi" path="res://character_body_2d.gd" id="3_aqk2v"]
+
+[node name="World" type="Node2D" unique_id=1526047387]
+position = Vector2(337, 308)
+script = ExtResource("1_aqk2v")
+
+[node name="platform" parent="." unique_id=1667965564 instance=ExtResource("1_f3sb7")]
+position = Vector2(-105, 1)
+scale = Vector2(3.1999981, 1)
+
+[node name="platform2" parent="." unique_id=677748267 instance=ExtResource("1_f3sb7")]
+position = Vector2(309, -58)
+scale = Vector2(4.280002, 1)
+
+[node name="CharacterBody2D" parent="." unique_id=1802959487 instance=ExtResource("2_tlwt5")]
+position = Vector2(-208, -171)
+scale = Vector2(0.25, 0.25)
+script = ExtResource("3_aqk2v")

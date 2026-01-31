@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://1jbhp08olbkg"]
+
+[ext_resource type="Texture2D" uid="uid://bmh1d6aqanqco" path="res://Lightner_berdly.png" id="1_f50pn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ij6vw"]
+size = Vector2(357, 721)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1802959487]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=919871512]
+texture = ExtResource("1_f50pn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1249938154]
+position = Vector2(-2.5, 1.5)
+shape = SubResource("RectangleShape2D_ij6vw")
