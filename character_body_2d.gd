@@ -6,6 +6,10 @@ const JUMP_VELOCITY = -190.0
 var gravity_scale:float = 800./1920.
 var gravity:Vector2
 
+@export var wing_mask:bool = true
+@export var heavy_mask:bool = false
+@export var dash_mask:bool = false
+
 
 #jumping
 var jump_timer:int = 0
@@ -19,6 +23,8 @@ var air_lerp_const:float = .03
 var wall_timer:int = 0
 var wall_cool_down:int = 0
 
+var last_vel_dir:int
+
 var airborne:int = 0
 var airborne_const:int = 120
 
@@ -28,6 +34,7 @@ var can_flap:bool = true
 
 #heavy mask
 var is_heavy:bool = false
+var heavy_equipped:bool = false
 
 #dash mask
 var can_dash:bool = true
@@ -40,8 +47,12 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	print(last_dir)
+	print(last_vel_dir)
 	print(is_on_wall())
+	
+	if wall_cool_down == 0:
+		if (velocity.x > 0.01): last_vel_dir = 1
+		elif (velocity.x < -0.01): last_vel_dir = -1
 	
 	#print(gravity)
 	if not is_on_floor():
@@ -54,8 +65,8 @@ func _physics_process(delta: float) -> void:
 		if jumping and Input.is_action_just_released("jump"): velocity.y = 0
 	else:
 		if (airborne > 0): 
-			#$Sprite2D.scale = Vector2(1 + (.5*airborne)/airborne_const, 1 - (.5*airborne)/airborne_const)
-			$Sprite2D.scale = Vector2(1 + .5, 1 - .5)
+			#squish when hitting the ground
+			$Sprite2D.scale = Vector2(1 + .6, 1 - .6)
 		airborne = 0
 	
 	#buffer so jumping feels more responsive
@@ -70,7 +81,6 @@ func _physics_process(delta: float) -> void:
 	
 	#wall_jump functionality
 	if is_on_wall():
-		if wall_cool_down == 0: last_dir = Input.get_axis("move_left", "move_right")
 		wall_cool_down = 5
 	else:
 		wall_cool_down = clamp(wall_cool_down - 1, 0, 5)
@@ -80,12 +90,13 @@ func _physics_process(delta: float) -> void:
 	if wall_just_jumped:
 		wall_just_jumped = false
 	air_lerp_const = lerp(air_lerp_const, 0.3, 0.012)
-	wall_timer = clamp(wall_timer - 1, 0, 5)
-	if wall_timer != 0 and !Input.is_action_pressed("move_left") and !Input.is_action_pressed("move_right") and (!Input.is_action_pressed("jump") or wall_timer >2):
+	wall_timer = clamp(wall_timer - 1, 0, 7)
+	if wall_timer != 0 and !Input.is_action_pressed("move_left") and !Input.is_action_pressed("move_right") and (!Input.is_action_pressed("jump") or wall_timer > 4):
 		print("wall normal jump")
 		air_lerp_const = lerp(air_lerp_const, 0.3, 0.1)
 	
 	
+	#squash and stretch code
 	if jumping:
 		$Sprite2D.scale = lerp($Sprite2D.scale, Vector2(.65, 1.35), 0.4)
 	elif !is_on_floor(): 
@@ -121,20 +132,18 @@ func jump():
 		
 		
 func wall_jump():
-	if last_dir < 0: 
+	if last_vel_dir < 0: 
 		print("right wall jump")
-		last_dir = 1
 		velocity.y = JUMP_VELOCITY*1.
 		velocity.x = 150
-	elif last_dir > 0: 
+	elif last_vel_dir > 0: 
 		print("left wall jump")
-		last_dir = -1
 		velocity.y = JUMP_VELOCITY*1.
 		velocity.x = -150
 	$Sprite2D.scale = Vector2(1.5, .5)
 	wall_just_jumped = true
 	air_lerp_const = 0.01
-	wall_timer = 5
+	wall_timer = 7
 
 func move():
 	var direction := Input.get_axis("move_left", "move_right")
