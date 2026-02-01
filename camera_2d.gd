@@ -1,14 +1,38 @@
 extends Camera2D
 
 
+@export var randomStrength:float = 20.0
+@export var shakeFade:float = 5.0
+
+var rng = RandomNumberGenerator.new()
+
+var shake_strength: float = 0.0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
 
+func apply_shake():
+	shake_strength = randomStrength
+	
+func randomOffset() -> Vector2:
+	return Vector2(rng.randf_range(-shake_strength,shake_strength)+40, rng.randf_range(-shake_strength,shake_strength)-10)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if shake_strength > 0:
+		shake_strength = lerpf(shake_strength, 0, shakeFade*delta)
+		offset = randomOffset()
 
-func _on_character_body_2d_special_camera(x: Variant, y: Variant) -> void:
+func _on_berdly_disable_special_camera() -> void:
+	pass # Replace with function body.
+
+
+func _on_berdly_heavy_shake() -> void:
+	apply_shake()
+	print("camera shake")
+
+
+func _on_berdly_special_camera(x: Variant, y: Variant) -> void:
 	pass # Replace with function body.

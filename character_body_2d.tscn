@@ -1,25 +1,59 @@
 [gd_scene format=3 uid="uid://1jbhp08olbkg"]
 
-[ext_resource type="Texture2D" uid="uid://crqnbgwl0sntv" path="res://notberdly.png" id="1_f50pn"]
+[ext_resource type="Script" uid="uid://br5tsr10vjxgi" path="res://character_body_2d.gd" id="1_ghijl"]
+[ext_resource type="Texture2D" uid="uid://yorml5cw6ecn" path="res://Sprites/playerbody.png" id="2_4sjlk"]
 [ext_resource type="Script" uid="uid://cusrb7duviik3" path="res://camera_2d.gd" id="2_ij6vw"]
+[ext_resource type="Texture2D" uid="uid://b6836q0ixist3" path="res://Sprites/playerhead.png" id="3_qp52p"]
+[ext_resource type="Texture2D" uid="uid://cnyxwpryq6nxo" path="res://Sprites/mask_float_small_2.png" id="4_6ct3r"]
+[ext_resource type="Texture2D" uid="uid://bys4j3xnf5nvd" path="res://Sprites/mask_sink_small.png" id="5_1kp85"]
+[ext_resource type="Texture2D" uid="uid://yk06ofn3bwie" path="res://Sprites/mask_quick_small_2.png" id="6_qnedo"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ij6vw"]
-size = Vector2(200.00003, 266.66666)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ghijl"]
+size = Vector2(10, 16)
 
 [node name="Berdly" type="CharacterBody2D" unique_id=1802959487]
+script = ExtResource("1_ghijl")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=919871512]
-texture = ExtResource("1_f50pn")
+[node name="Sprite2D" type="Node2D" parent="." unique_id=1579577721]
+position = Vector2(-0.5, -4.5)
+
+[node name="Body" type="Sprite2D" parent="Sprite2D" unique_id=1283699370]
+texture = ExtResource("2_4sjlk")
+hframes = 2
+
+[node name="None" type="Sprite2D" parent="Sprite2D" unique_id=1093801363]
+texture = ExtResource("3_qp52p")
+hframes = 2
+
+[node name="Wing" type="Sprite2D" parent="Sprite2D" unique_id=2109062996]
+visible = false
+position = Vector2(-0.5, -6.5)
+texture = ExtResource("4_6ct3r")
+hframes = 2
+
+[node name="Heavy" type="Sprite2D" parent="Sprite2D" unique_id=2000929751]
+visible = false
+position = Vector2(0, -4)
+texture = ExtResource("5_1kp85")
+
+[node name="Dash" type="Sprite2D" parent="Sprite2D" unique_id=106341063]
+visible = false
+position = Vector2(-0.5, -3.5)
+texture = ExtResource("6_qnedo")
+hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1249938154]
-position = Vector2(6.556511e-07, 0)
-scale = Vector2(0.03, 0.03)
-shape = SubResource("RectangleShape2D_ij6vw")
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_ghijl")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=213581809]
-offset = Vector2(40, 0)
+offset = Vector2(40, -10)
 process_callback = 0
 limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 15.0
 script = ExtResource("2_ij6vw")
+
+[connection signal="disable_special_camera" from="." to="Camera2D" method="_on_berdly_disable_special_camera"]
+[connection signal="heavy_shake" from="." to="Camera2D" method="_on_berdly_heavy_shake"]
+[connection signal="special_camera" from="." to="Camera2D" method="_on_berdly_special_camera"]
