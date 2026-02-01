@@ -13,12 +13,18 @@ script = ExtResource("1_aqk2v")
 position = Vector2(-105, 1)
 scale = Vector2(3.1999981, 1)
 
+[node name="platform3" parent="." unique_id=2024079924 instance=ExtResource("1_f3sb7")]
+position = Vector2(-58.21, -235.16)
+scale = Vector2(0.728, 1.769)
+
 [node name="platform2" parent="." unique_id=677748267 instance=ExtResource("1_f3sb7")]
-position = Vector2(309, -58)
-scale = Vector2(4.280002, 1)
+position = Vector2(310, -120)
+scale = Vector2(4.28, 1.33)
 
 [node name="CharacterBody2D" parent="." unique_id=1802959487 instance=ExtResource("2_tlwt5")]
 position = Vector2(-208, -171)
 script = ExtResource("3_aqk2v")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=1696161828]
+
+[connection signal="special_camera" from="CharacterBody2D" to="." method="_on_character_body_2d_special_camera"]
