@@ -10,6 +10,9 @@ var gravity:Vector2
 @export var heavy_mask:bool = false
 @export var dash_mask:bool = false
 
+var dead:bool = false
+var dead_timer:int = 0
+var dead_frame:int = 0
 
 #jumping
 var jump_timer:int = 0
@@ -27,6 +30,8 @@ var last_vel_dir:int
 
 var airborne:int = 0
 var airborne_const:int = 120
+
+var last_checkpoint:Vector2 = Vector2(0, -6)
 
 enum Masks {
 	NONE,
@@ -58,6 +63,7 @@ func _ready():
 	gravity.x = 0
 	gravity.y = gravity_scale*(float)(DisplayServer.window_get_size().x)
 	cur_mask = Masks.NONE
+	dead = false
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -65,6 +71,20 @@ func _physics_process(delta: float) -> void:
 	#print(is_on_wall())
 	
 	#print(air_lerp_const)
+	if dead and dead_timer == 0:
+		dead_timer = 60
+	if dead_timer > 30:
+		dead_timer -= 1
+		$"../fpscounter2/Sprite2D".set_frame(dead_frame)
+		if dead_timer % 2 == 0: dead_frame = clamp(dead_frame + 1, 0, 8)
+	elif dead_timer > 0:
+		dead = false
+		rotation = 0
+		dead_timer -= 1
+		$"../fpscounter2/Sprite2D".set_frame(dead_frame)
+		if dead_timer % 2 == 0: dead_frame = clamp(dead_frame - 1, 0, 8)
+	if (dead_timer == 30):
+		position = last_checkpoint
 	
 	if last_vel_dir < 0: 
 		$Sprite2D/Body.set_frame(1)
@@ -233,6 +253,7 @@ func _physics_process(delta: float) -> void:
 		jump_timer -= 1
 	
 func jump():
+	if dead: return
 	# Handle jump.
 	velocity.y = JUMP_VELOCITY
 	#velocity.x += 0.05*last_dir
@@ -242,6 +263,7 @@ func jump():
 		
 		
 func wall_jump():
+	if dead: return
 	if last_vel_dir < 0: 
 		print("right wall jump")
 		velocity.y = JUMP_VELOCITY*1.
@@ -256,6 +278,7 @@ func wall_jump():
 	wall_timer = 7
 
 func move():
+	if dead: return
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction:
 		velocity.x = lerp(velocity.x, (direction * SPEED), .4)
@@ -263,6 +286,7 @@ func move():
 		velocity.x = lerp((velocity.x), 0., .4)
 		
 func move_air():
+	if dead: return
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction:
 		velocity.x = lerp(velocity.x, (direction * SPEED), air_lerp_const)
@@ -271,6 +295,10 @@ func move_air():
 		
 func death():
 	special_camera.emit(position.x, position.y)
+	dead = true
+	velocity = Vector2(80*last_vel_dir, -200)
+	rotation = 80
+	print("Die!")
 
 func respawn():
 	disable_special_camera.emit()

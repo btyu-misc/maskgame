@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dkotk8gtvp3dv"]
 
 [ext_resource type="Script" uid="uid://b7xhbq7jjkjc7" path="res://fpscounter.gd" id="1_t78nd"]
+[ext_resource type="Texture2D" uid="uid://c4gq12gs0hdr3" path="res://Sprites/irisout.png" id="2_bpopt"]
 
 [node name="fpscounter" type="CanvasLayer" unique_id=1625385840]
 script = ExtResource("1_t78nd")
@@ -8,3 +9,9 @@ script = ExtResource("1_t78nd")
 [node name="Label" type="Label" parent="." unique_id=1427850470]
 offset_right = 40.0
 offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1359968144]
+position = Vector2(160, 90)
+texture = ExtResource("2_bpopt")
+hframes = 9

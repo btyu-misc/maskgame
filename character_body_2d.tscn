@@ -54,6 +54,8 @@ position_smoothing_enabled = true
 position_smoothing_speed = 15.0
 script = ExtResource("2_ij6vw")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=316979083]
+
 [connection signal="disable_special_camera" from="." to="Camera2D" method="_on_berdly_disable_special_camera"]
 [connection signal="heavy_shake" from="." to="Camera2D" method="_on_berdly_heavy_shake"]
 [connection signal="special_camera" from="." to="Camera2D" method="_on_berdly_special_camera"]
