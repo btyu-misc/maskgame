@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://duh4foc7hys4w"]
+
+[ext_resource type="Texture2D" uid="uid://c4gq12gs0hdr3" path="res://Sprites/irisout.png" id="1_fyqef"]
+
+[node name="UI" type="Control" unique_id=1107275850]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=972607828]
+texture = ExtResource("1_fyqef")
+hframes = 8
