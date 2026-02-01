@@ -42,7 +42,6 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	print(last_dir)
 	print(is_on_wall())
-	if Input.is_action_just_pressed("move_left") or Input.is_action_just_pressed("move_right"): last_dir = Input.get_axis("move_left", "move_right")
 	
 	#print(gravity)
 	if not is_on_floor():
@@ -71,16 +70,18 @@ func _physics_process(delta: float) -> void:
 	
 	#wall_jump functionality
 	if is_on_wall():
+		if wall_cool_down == 0: last_dir = Input.get_axis("move_left", "move_right")
 		wall_cool_down = 5
 	else:
 		wall_cool_down = clamp(wall_cool_down - 1, 0, 5)
-	if Input.is_action_just_pressed("jump") and wall_cool_down > 0 and !is_on_floor():
+	if jump_timer > 0 and wall_cool_down > 0 and !is_on_floor():
+		#if (Input.get_axis("move_left", "move_right") == 0): last_dir = 0
 		wall_jump()
 	if wall_just_jumped:
 		wall_just_jumped = false
 	air_lerp_const = lerp(air_lerp_const, 0.3, 0.012)
 	wall_timer = clamp(wall_timer - 1, 0, 5)
-	if wall_timer != 0 and !Input.is_action_pressed("move_left") and !Input.is_action_pressed("move_right"):
+	if wall_timer != 0 and !Input.is_action_pressed("move_left") and !Input.is_action_pressed("move_right") and (!Input.is_action_pressed("jump") or wall_timer >2):
 		print("wall normal jump")
 		air_lerp_const = lerp(air_lerp_const, 0.3, 0.1)
 	
@@ -122,10 +123,12 @@ func jump():
 func wall_jump():
 	if last_dir < 0: 
 		print("right wall jump")
+		last_dir = 1
 		velocity.y = JUMP_VELOCITY*1.
 		velocity.x = 150
 	elif last_dir > 0: 
 		print("left wall jump")
+		last_dir = -1
 		velocity.y = JUMP_VELOCITY*1.
 		velocity.x = -150
 	$Sprite2D.scale = Vector2(1.5, .5)
