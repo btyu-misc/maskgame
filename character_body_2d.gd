@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+var start:int = 60
 
 var SPEED:int = 90
 const JUMP_VELOCITY = -190.0
@@ -12,7 +13,7 @@ var gravity:Vector2
 
 var dead:bool = false
 var dead_timer:int = 0
-var dead_frame:int = 0
+var dead_frame:int = 8
 
 #jumping
 var jump_timer:int = 0
@@ -69,7 +70,12 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	#print(last_vel_dir)
 	#print(is_on_wall())
-	
+	if start > 0:
+		$"../fpscounter2/Sprite2D".set_frame(dead_frame)
+		print(dead_frame)
+		if start < 40 and start % 2 == 0: dead_frame = clamp(dead_frame - 1, 0, 8)
+		start -= 1
+		return
 	#print(air_lerp_const)
 	if dead and dead_timer == 0:
 		dead_timer = 60
@@ -139,6 +145,8 @@ func _physics_process(delta: float) -> void:
 					heavy_windup -= 1
 					$Sprite2D.scale.x = move_toward($Sprite2D.scale.x, 1., 0.1)
 					$Sprite2D.scale.y = move_toward($Sprite2D.scale.y, 1., 0.1)
+					var rng = RandomNumberGenerator.new()
+					$Sprite2D.scale = lerp(scale, Vector2(rng.randf_range(.2, 1.8), rng.randf_range(.2, 1.8)), 0.4)
 					velocity.y = 0
 					velocity.x = 0
 				else:
@@ -168,6 +176,8 @@ func _physics_process(delta: float) -> void:
 			heavy_shake.emit()
 			print("emitted heavy shake")
 		heavy_windup = 45
+		refresh.emit()
+		
 		
 		#sprint
 		if Input.is_action_pressed("action") and cur_mask == Masks.DASH:
@@ -211,7 +221,8 @@ func _physics_process(delta: float) -> void:
 		$Sprite2D.scale = lerp($Sprite2D.scale, Vector2(1., 1.), 0.2)
 	
 	#print(Input.is_action_pressed("choose_mask"))
-	if Input.is_action_just_pressed("choose_mask") or selecting:
+	if (dead): selecting = false
+	if !dead and (Input.is_action_just_pressed("choose_mask") or selecting):
 		selecting = true
 		Engine.time_scale = move_toward(Engine.time_scale, 0.05, 0.15)
 		if Input.is_action_just_pressed("no_mask"):
@@ -244,7 +255,7 @@ func _physics_process(delta: float) -> void:
 			selecting = false
 		elif Input.is_action_just_released("choose_mask"):
 			selecting = false
-	if selecting == false:
+	if selecting == false or dead:
 		Engine.time_scale = clamp(move_toward(Engine.time_scale, 1, 0.05), 0, 60)
 		Engine.physics_ticks_per_second = clamp(move_toward(Engine.physics_ticks_per_second, 60, 3), 0, 60)
 
@@ -294,10 +305,12 @@ func move_air():
 		velocity.x = lerp((velocity.x), 0., air_lerp_const)
 		
 func death():
+	if (cur_mask == Masks.HEAVY and global_position.y < 340): return 
 	special_camera.emit(position.x, position.y)
 	dead = true
-	velocity = Vector2(80*last_vel_dir, -200)
+	velocity = Vector2(80*last_vel_dir, -300)
 	rotation = 80
+	heavy_windup = 45
 	print("Die!")
 
 func respawn():
@@ -308,3 +321,5 @@ signal special_camera(x, y)
 signal disable_special_camera()
 
 signal heavy_shake()
+
+signal refresh()

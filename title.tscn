@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bgi65p4ptwvhu"]
+
+[ext_resource type="Script" uid="uid://b34r6qlw7vpod" path="res://title.gd" id="1_3xoar"]
+[ext_resource type="Texture2D" uid="uid://c708c7wwlwf25" path="res://Sprites/title.png" id="2_mom7w"]
+[ext_resource type="Texture2D" uid="uid://dt1myphgf7g5f" path="res://Sprites/title2.png" id="3_7lgly"]
+[ext_resource type="Texture2D" uid="uid://dmpo65ssq23vs" path="res://Sprites/black.png" id="4_0824t"]
+
+[node name="Title" type="Node2D" unique_id=1584101395]
+script = ExtResource("1_3xoar")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1752796735]
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer" unique_id=7553349]
+position = Vector2(160, 90)
+texture = ExtResource("2_mom7w")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer" unique_id=1738760648]
+position = Vector2(160, 90)
+texture = ExtResource("3_7lgly")
+
+[node name="Sprite2D3" type="Sprite2D" parent="CanvasLayer" unique_id=505440841]
+visible = false
+position = Vector2(160, 91)
+texture = ExtResource("4_0824t")

@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dihua5svu7dew"]
+
+[ext_resource type="Script" uid="uid://di8vf01o0rudg" path="res://credits.gd" id="1_pjc1l"]
+[ext_resource type="Texture2D" uid="uid://b1hxqkx7ej5al" path="res://credits1.png" id="2_pjc1l"]
+[ext_resource type="Texture2D" uid="uid://bas4wluqqpn8c" path="res://credits2.png" id="3_j6beo"]
+[ext_resource type="Texture2D" uid="uid://dmpo65ssq23vs" path="res://Sprites/black.png" id="4_5em78"]
+
+[node name="Credits" type="Node2D" unique_id=1584101395]
+script = ExtResource("1_pjc1l")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1752796735]
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer" unique_id=7553349]
+position = Vector2(160, 90)
+texture = ExtResource("2_pjc1l")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer" unique_id=1738760648]
+visible = false
+position = Vector2(160.125, 90.375)
+scale = Vector2(0.21733926, 0.22157702)
+texture = ExtResource("3_j6beo")
+
+[node name="Sprite2D3" type="Sprite2D" parent="CanvasLayer" unique_id=505440841]
+visible = false
+position = Vector2(160, 91)
+texture = ExtResource("4_5em78")

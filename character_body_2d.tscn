@@ -47,7 +47,7 @@ position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_ghijl")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=213581809]
-offset = Vector2(40, -10)
+offset = Vector2(60, -15)
 process_callback = 0
 limit_smoothed = true
 position_smoothing_enabled = true

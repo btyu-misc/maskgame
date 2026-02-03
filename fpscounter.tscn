@@ -7,6 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://bibi6plye2nre" path="res://Sprites/mask_quick.png" id="5_e73ts"]
 [ext_resource type="Texture2D" uid="uid://c7o42pyt2sk0o" path="res://Sprites/use.png" id="6_72s33"]
 [ext_resource type="Texture2D" uid="uid://bwees7tuwasl8" path="res://Sprites/used.png" id="7_cyo21"]
+[ext_resource type="Texture2D" uid="uid://rdi7e7op1b05" path="res://Sprites/menu_select.png" id="8_lt5c1"]
+[ext_resource type="Texture2D" uid="uid://dbb0ft452c5qc" path="res://Sprites/button.png" id="9_e73ts"]
+[ext_resource type="Texture2D" uid="uid://b6armtj2cj8pj" path="res://Sprites/button m.png" id="10_cyo21"]
+[ext_resource type="Texture2D" uid="uid://bsoqpes741d3k" path="res://Sprites/button n.png" id="11_aec1b"]
+[ext_resource type="Texture2D" uid="uid://dt3e1tkobgjfy" path="res://Sprites/white.png" id="12_aec1b"]
 
 [node name="fpscounter" type="CanvasLayer" unique_id=1625385840]
 script = ExtResource("1_t78nd")
@@ -23,15 +28,15 @@ texture = ExtResource("2_bpopt")
 hframes = 9
 
 [node name="Wing" type="Sprite2D" parent="." unique_id=344599346]
-position = Vector2(20, 12)
+position = Vector2(23, 22)
 texture = ExtResource("3_xfo56")
 
 [node name="Heavy" type="Sprite2D" parent="." unique_id=554744119]
-position = Vector2(15, 12)
+position = Vector2(23, 22)
 texture = ExtResource("4_lt5c1")
 
 [node name="Dash" type="Sprite2D" parent="." unique_id=923545846]
-position = Vector2(15, 12)
+position = Vector2(23, 22)
 texture = ExtResource("5_e73ts")
 
 [node name="Uses" type="Node2D" parent="." unique_id=2083407155]
@@ -44,3 +49,25 @@ texture = ExtResource("6_72s33")
 [node name="Used" type="Sprite2D" parent="Uses" unique_id=1708271259]
 position = Vector2(13, 68)
 texture = ExtResource("7_cyo21")
+
+[node name="Select_Mask" type="Sprite2D" parent="." unique_id=1946616540]
+position = Vector2(208, 109)
+texture = ExtResource("8_lt5c1")
+
+[node name="But" type="Sprite2D" parent="." unique_id=2098079789]
+z_index = -1
+position = Vector2(22, 22)
+texture = ExtResource("9_e73ts")
+
+[node name="M" type="Sprite2D" parent="But" unique_id=650069107]
+position = Vector2(279, -2)
+texture = ExtResource("10_cyo21")
+
+[node name="N" type="Sprite2D" parent="But" unique_id=130880301]
+position = Vector2(249, -2)
+texture = ExtResource("11_aec1b")
+
+[node name="White" type="Sprite2D" parent="." unique_id=1068597922]
+visible = false
+position = Vector2(160, 90)
+texture = ExtResource("12_aec1b")
